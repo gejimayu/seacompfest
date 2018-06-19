@@ -1,23 +1,7 @@
 require_relative "driver"
 require_relative "user"
 require_relative "map"
-
-def generateRandomPos(map)
-  posX = Random.rand(0...map.size)
-  posY = Random.rand(0...map.size)
-  Struct.new(:x, :y).new(posX, posY)
-end
-
-def generateFiveDriversRandomly(map)
-  drivers = []
-  for i in 1..5
-    pos = generateRandomPos(map)
-    driver = Driver.new(pos.x, pos.y, "Driver" + i.to_s)
-    drivers << driver
-    map.insert(driver)
-  end
-  drivers
-end
+require_relative "helper"
 
 flags = ARGV
 case flags.length
@@ -48,6 +32,10 @@ when 3
   pos = Struct.new(:x, :y).new(userPosX, userPosY)
   user = User.new(pos.x, pos.y)
   map.insert(user)
+
+else
+  puts "Wrong parameters"
+  Kernel.exit(false)
 end
 
 while true do

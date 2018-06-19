@@ -1,6 +1,3 @@
-require_relative "driver"
-require_relative "user"
-
 class Map
   attr_reader :grid #map 2d
   attr_reader :size #size of map, n x n
