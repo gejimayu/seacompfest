@@ -1,9 +1,7 @@
 class User
-  attr_reader :posX
-  attr_reader :posY
+  attr_reader :pos
 
   def initialize(x = 0, y = 0)
-    @posX = x
-    @posY = y
+    @pos = Struct.new(:x, :y).new(x, y)
   end
 end

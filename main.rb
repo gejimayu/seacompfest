@@ -2,25 +2,33 @@ require_relative "driver"
 require_relative "user"
 require_relative "map"
 
+def generateRandomPos(map)
+  posX = Random.rand(0...map.size)
+  posY = Random.rand(0...map.size)
+  Struct.new(:x, :y).new(posX, posY)
+end
+
+def generateFiveDriversRandomly(map)
+  drivers = []
+  for i in 1..5
+    pos = generateRandomPos(map)
+    driver = Driver.new(pos.x, pos.y, "Driver" + i.to_s)
+    drivers << driver
+    map.insert(driver)
+  end
+  drivers
+end
+
 flags = ARGV
 case flags.length
 when 0
   map = Map.new
 
-  drivers = []
-  #Generate 5 drivers
-  for i in 1..5
-    posX = Random.rand(0...map.size)
-    posY = Random.rand(0...map.size)
-    driver = Driver.new(posX, posY, "Driver" + i.to_s)
-    drivers << driver
-    map.insert(driver)
-  end
+  drivers = generateFiveDriversRandomly(map)
 
   #init a user
-  posX = Random.rand(0...map.size)
-  posY = Random.rand(0...map.size)
-  user = User.new(posX, posY)
+  pos = generateRandomPos(map)
+  user = User.new(pos.x, pos.y)
   map.insert(user)
 
 when 3
@@ -35,17 +43,10 @@ when 3
 
   map = Map.new(size)
 
-  drivers = []
-  #Generate 5 drivers 
-  for i in 1..5
-    posX = Random.rand(0...map.size)
-    posY = Random.rand(0...map.size)
-    driver = Driver.new(posX, posY, "Driver" + i.to_s)
-    drivers << driver
-    map.insert(driver)
-  end
+  drivers = generateFiveDriversRandomly(map)
 
-  user = User.new(userPosX, userPosY)
+  pos = Struct.new(:x, :y).new(userPosX, userPosY)
+  user = User.new(pos.x, pos.y)
   map.insert(user)
 end
 

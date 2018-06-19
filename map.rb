@@ -29,9 +29,9 @@ class Map
   #insert object into map
   def insert(object)
     if object.is_a?(Driver)
-      @grid[object.posY][object.posX] = "D"
+      @grid[object.pos.y][object.pos.x] = "D"
     elsif object.is_a?(User)
-      @grid[object.posY][object.posX] = "U"
+      @grid[object.pos.y][object.pos.x] = "U"
     else
       puts "Error inserting object to map : expecting driver or user"  
     end
