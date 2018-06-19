@@ -54,13 +54,16 @@ while true do
   puts "1. Show map"
   puts "2. Order Go-Ride"
   puts "3. View History"
+  puts "4. Exit program"
   print "Please pick an action > "
   option = $stdin.gets.chomp.to_i
   case option
   when 1
     map.show
+  when 4
+    Kernel.exit(false)
   else
-    puts "Wrong input, expecting [1..3]"
+    puts "Wrong input, expecting [1..4]"
     print "\n"
   end
 end
