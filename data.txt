@@ -1,0 +1,12 @@
+[size]
+20
+[user's position]
+1 2
+[num of drivers]
+5
+[drivers position]
+2 3
+4 5
+6 7
+10 10
+11 11

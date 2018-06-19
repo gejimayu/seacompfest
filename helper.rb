@@ -14,3 +14,14 @@ def generateFiveDriversRandomly(map)
   end
   drivers
 end
+
+def generateDrivers(map, drivers_pos)
+  drivers = []
+  for i in 0...drivers_pos.length
+    pos = Struct.new(:x, :y).new(drivers_pos[i][0], drivers_pos[i][1])
+    driver = Driver.new(pos.x, pos.y, "Driver" + i.to_s)
+    drivers << driver
+    map.insert(driver)
+  end
+  drivers
+end

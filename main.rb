@@ -17,10 +17,10 @@ when 0
 
 when 3
   size = flags[0].to_i
-  userPosX = flags[1].to_i
-  userPosY = flags[2].to_i
+  user_pos_x = flags[1].to_i
+  user_pos_y = flags[2].to_i
 
-  if userPosY < 0 || userPosY >= size || userPosX < 0 || userPosX >= size
+  if user_pos_y < 0 || user_pos_y >= size || user_pos_x < 0 || user_pos_x >= size
     puts "Wrong input : user's position is out of boundary"
     Kernel.exit(false)
   end
@@ -29,7 +29,46 @@ when 3
 
   drivers = generateFiveDriversRandomly(map)
 
-  pos = Struct.new(:x, :y).new(userPosX, userPosY)
+  pos = Struct.new(:x, :y).new(user_pos_x, user_pos_y)
+  user = User.new(pos.x, pos.y)
+  map.insert(user)
+
+when 1
+  filename = flags[0] 
+  input_stream = open(filename)
+
+  driverPos = []
+  i = 0
+  while (line = input_stream.gets)
+    i += 1
+    if i == 2
+      size = line.to_i
+    elsif i == 4
+      pos = line.split(" ").map{|x| x.to_i}
+      user_pos_x = pos[0]
+      user_pos_y = pos[1]
+    elsif i == 6
+      num_drivers = line.to_i
+    elsif i == 7
+      for k in 1..num_drivers
+        line = input_stream.gets
+        pos = line.split(" ").map{|x| x.to_i}
+        driverPos << [pos[0], pos[1]]
+      end
+    end
+  end
+  input_stream.close
+
+  if user_pos_y < 0 || user_pos_y >= size || user_pos_x < 0 || user_pos_x >= size
+    puts "Wrong input : user's position is out of boundary"
+    Kernel.exit(false)
+  end
+
+  map = Map.new(size)
+
+  drivers = generateDrivers(map, driverPos)
+
+  pos = Struct.new(:x, :y).new(user_pos_x, user_pos_y)
   user = User.new(pos.x, pos.y)
   map.insert(user)
 
