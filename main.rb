@@ -76,6 +76,7 @@ else
 end
 
 while true do
+  print "\n"
   puts "Main menu :"
   puts "1. Show map"
   puts "2. Order Go-Ride"
@@ -83,6 +84,7 @@ while true do
   puts "4. Exit program"
   print "Please pick an action > "
   option = $stdin.gets.chomp.to_i
+  print "\n"
   case option
   when 1
     map.show
@@ -91,11 +93,20 @@ while true do
     puts "Format input: x y"
     puts "Example: 1 2"
     print "Pick a coordinate > "
-    destination = $stdin.gets.chomp.split(" ").map { |x| x.to_i }
-    puts destination[0]
-    puts destination[1]
+    temp = $stdin.gets.chomp.split(" ").map { |x| x.to_i }
+    dest = Struct.new(:x, :y).new(temp[0], temp[1])
+
+    print "\n"
+
     closest_driver = Helper.find_closest_driver(user, drivers)
     puts "Found driver #{drivers[closest_driver].name}"
+
+    path = Helper.find_path(user, dest)
+
+    puts "Route : "
+    path.each do |way|
+      puts way
+    end
   when 4
     Kernel.exit(false)
   else

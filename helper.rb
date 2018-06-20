@@ -50,4 +50,64 @@ module Helper
 
     closest
   end
+
+  def Helper.turn_where(prev_head, next_head)
+    if prev_head == 0 && next_head == 1
+      "Turn right"
+    elsif prev_head == 0 && next_head == 2
+      "Turn around"
+    elsif prev_head == 0 && next_head == 3
+      "Turn left"
+    elsif prev_head == 1 && next_head == 0
+      "Turn left"
+    elsif prev_head == 1 && next_head == 2
+      "Turn right"
+    elsif prev_head == 1 && next_head == 3
+      "Turn around"
+    elsif prev_head == 2 && next_head == 0
+      "Turn around"
+    elsif prev_head == 2 && next_head == 1
+      "Turn left"
+    elsif prev_head == 2 && next_head == 3
+      "Turn right"
+    elsif prev_head == 3 && next_head == 0
+      "Turn right"
+    elsif prev_head == 3 && next_head == 1
+      "Turn around"
+    elsif prev_head == 3 && next_head == 2
+      "Turn left"
+    end
+  end
+
+  def Helper.find_path(user, dest)
+    path = []
+    now = user.pos
+    path << "Start at (#{now.x}, #{now.y})"
+    #top right bottom left
+    diff_x = [0, 1, 0, -1]
+    diff_y = [-1, 0, 1, 0]
+    head = -1
+    while now.x != dest.x || now.y != dest.y do
+      way = Struct.new(:x, :y).new(now.x + diff_x[0], now.y + diff_y[0])
+      closest = 0
+      min = Helper.calculate_distance(way, dest)
+      for i in 1..3
+        way = Struct.new(:x, :y).new(now.x + diff_x[i], now.y + diff_y[i])
+        temp = Helper.calculate_distance(way, dest)
+        if temp < min
+          min = temp
+          closest = i
+        end
+      end
+      
+      if head != -1 && head != closest
+        path << turn_where(head, closest)
+      end
+      head = closest
+
+      now = Struct.new(:x, :y).new(now.x + diff_x[closest], now.y + diff_y[closest])
+      path << "Go to (#{now.x}, #{now.y})"
+    end
+    path << "Finish at (#{dest.x}, #{dest.y})"
+  end
 end
