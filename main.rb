@@ -87,7 +87,15 @@ while true do
   when 1
     map.show
   when 2
+    puts "Where do you want to go ? "
+    puts "Format input: x y"
+    puts "Example: 1 2"
+    print "Pick a coordinate > "
+    destination = $stdin.gets.chomp.split(" ").map { |x| x.to_i }
+    puts destination[0]
+    puts destination[1]
     closest_driver = Helper.find_closest_driver(user, drivers)
+    puts "Found driver #{drivers[closest_driver].name}"
   when 4
     Kernel.exit(false)
   else
