@@ -8,10 +8,10 @@ case flags.length
 when 0
   map = Map.new
 
-  drivers = generateFiveDriversRandomly(map)
+  drivers = Helper.generate_five_drivers_randomly(map)
 
   #init a user
-  pos = generateRandomPos(map)
+  pos = Helper.generate_random_pos(map)
   user = User.new(pos.x, pos.y)
   map.insert(user)
 
@@ -20,14 +20,14 @@ when 3
   user_pos_x = flags[1].to_i
   user_pos_y = flags[2].to_i
 
-  if user_pos_y < 0 || user_pos_y >= size || user_pos_x < 0 || user_pos_x >= size
+  if Helper.is_out_of_bound(user_pos_x, user_pos_y, size)
     puts "Wrong input : user's position is out of boundary"
     Kernel.exit(false)
   end
 
   map = Map.new(size)
 
-  drivers = generateFiveDriversRandomly(map)
+  drivers = Helper.generate_five_drivers_randomly(map)
 
   pos = Struct.new(:x, :y).new(user_pos_x, user_pos_y)
   user = User.new(pos.x, pos.y)
@@ -59,14 +59,14 @@ when 1
   end
   input_stream.close
 
-  if user_pos_y < 0 || user_pos_y >= size || user_pos_x < 0 || user_pos_x >= size
+  if Helper.is_out_of_bound(user_pos_x, user_pos_y, size)
     puts "Wrong input : user's position is out of boundary"
     Kernel.exit(false)
   end
 
   map = Map.new(size)
 
-  drivers = generateDrivers(map, driverPos)
+  drivers = Helper.generate_drivers(map, driverPos)
 
   pos = Struct.new(:x, :y).new(user_pos_x, user_pos_y)
   user = User.new(pos.x, pos.y)
@@ -88,6 +88,8 @@ while true do
   case option
   when 1
     map.show
+  when 2
+    Helper.orderGoRide()
   when 4
     Kernel.exit(false)
   else
