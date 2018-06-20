@@ -104,6 +104,9 @@ while true do
 
     path = Helper.find_path(user.pos, dest)
     Helper.show_path(user.pos, dest, path)
+
+    cost = Unit_Cost * (path.length - 1) #minus finish
+    puts "Cost : #{cost}"
   when 4
     Kernel.exit(false)
   else
