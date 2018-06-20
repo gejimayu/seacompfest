@@ -87,7 +87,7 @@ while true do
   when 1
     map.show
   when 2
-    puts map.find_closest_driver
+    closest_driver = Helper.find_closest_driver(user, drivers)
   when 4
     Kernel.exit(false)
   else

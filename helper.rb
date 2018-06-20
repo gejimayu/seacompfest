@@ -34,4 +34,20 @@ module Helper
   def Helper.calculate_distance(a, b)
     ((a.y - b.y) ** 2) + ((a.x - b.x) ** 2)
   end
+
+  def Helper.find_closest_driver(user, drivers)
+    raise "Error user / driver not found" if user.nil? || drivers.empty?
+
+    min = calculate_distance(drivers[0].pos, user.pos)
+    closest = 0 #driver num 0
+    for i in 1...drivers.length
+      result = calculate_distance(drivers[i].pos, user.pos) 
+      if result < min
+        min = result 
+        closest = i
+      end
+    end
+
+    closest
+  end
 end
