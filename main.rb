@@ -14,6 +14,7 @@ when 0
   pos = Helper.generate_random_pos(map)
   user = User.new(pos.x, pos.y)
   map.insert(user)
+  map.find_closest_driver
 
 when 3
   size = flags[0].to_i
@@ -21,8 +22,7 @@ when 3
   user_pos_y = flags[2].to_i
 
   if Helper.is_out_of_bound(user_pos_x, user_pos_y, size)
-    puts "Wrong input : user's position is out of boundary"
-    Kernel.exit(false)
+    raise "Wrong input : user's position is out of boundary"
   end
 
   map = Map.new(size)
@@ -60,8 +60,7 @@ when 1
   input_stream.close
 
   if Helper.is_out_of_bound(user_pos_x, user_pos_y, size)
-    puts "Wrong input : user's position is out of boundary"
-    Kernel.exit(false)
+    raise "Wrong input : user's position is out of boundary"
   end
 
   map = Map.new(size)
@@ -73,8 +72,7 @@ when 1
   map.insert(user)
 
 else
-  puts "Wrong parameters"
-  Kernel.exit(false)
+  raise "Wrong parameters"
 end
 
 while true do
