@@ -79,10 +79,40 @@ module Helper
     end
   end
 
-  def Helper.find_path(user, dest)
+  def Helper.direction(from, to)
+    if to.x - from.x > 0
+      1 #right
+    elsif to.x - from.x < 0
+      3 #left
+    elsif to.y - from.y > 0
+      2 #down
+    else
+      0 #top
+    end
+  end
+
+  def Helper.show_path(user_pos, dest, path)
+    puts "Route:"
+    puts "Start at (#{user_pos.x}, #{user_pos.y})"
+    head = -1
+    now = user_pos
+    path.each do |way|
+      closest = direction(now, way)
+      if head != -1 && head != closest
+        puts turn_where(head, closest)
+      end
+
+      now = way
+      puts "Go to (#{now.x}, #{now.y})"
+
+      head = closest
+    end
+    puts "Finish at (#{dest.x}, #{dest.y})"
+  end
+
+  def Helper.find_path(user_pos, dest)
     path = []
-    now = user.pos
-    path << "Start at (#{now.x}, #{now.y})"
+    now = user_pos
     #top right bottom left
     diff_x = [0, 1, 0, -1]
     diff_y = [-1, 0, 1, 0]
@@ -99,15 +129,9 @@ module Helper
           closest = i
         end
       end
-      
-      if head != -1 && head != closest
-        path << turn_where(head, closest)
-      end
-      head = closest
-
       now = Struct.new(:x, :y).new(now.x + diff_x[closest], now.y + diff_y[closest])
-      path << "Go to (#{now.x}, #{now.y})"
+      path << now
     end
-    path << "Finish at (#{dest.x}, #{dest.y})"
+    path
   end
 end

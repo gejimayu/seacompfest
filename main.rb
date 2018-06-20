@@ -3,6 +3,8 @@ require_relative "user"
 require_relative "map"
 require_relative "helper"
 
+Unit_Cost = 100
+
 flags = ARGV
 case flags.length
 when 0
@@ -95,18 +97,13 @@ while true do
     print "Pick a coordinate > "
     temp = $stdin.gets.chomp.split(" ").map { |x| x.to_i }
     dest = Struct.new(:x, :y).new(temp[0], temp[1])
-
     print "\n"
 
     closest_driver = Helper.find_closest_driver(user, drivers)
     puts "Found driver #{drivers[closest_driver].name}"
 
-    path = Helper.find_path(user, dest)
-
-    puts "Route : "
-    path.each do |way|
-      puts way
-    end
+    path = Helper.find_path(user.pos, dest)
+    Helper.show_path(user.pos, dest, path)
   when 4
     Kernel.exit(false)
   else
