@@ -7,9 +7,9 @@ module Helper
 
   def Helper.generate_five_drivers_randomly(map)
     drivers = []
-    for i in 1..5
+    for i in 0...5
       pos = generate_random_pos(map)
-      driver = Driver.new(pos.x, pos.y, "Driver" + i.to_s)
+      driver = Driver.new(pos.x, pos.y, i.to_s)
       drivers << driver
       map.insert(driver)
     end
@@ -20,7 +20,7 @@ module Helper
     drivers = []
     for i in 0...drivers_pos.length
       pos = Struct.new(:x, :y).new(drivers_pos[i][0], drivers_pos[i][1])
-      driver = Driver.new(pos.x, pos.y, "Driver" + i.to_s)
+      driver = Driver.new(pos.x, pos.y, i.to_s)
       drivers << driver
       map.insert(driver)
     end
@@ -29,5 +29,9 @@ module Helper
 
   def Helper.is_out_of_bound(x, y, bound)
     return y < 0 || y >= bound || x < 0 || x >= bound
+  end
+
+  def Helper.calculate_distance(a, b)
+    ((a.y - b.y) ** 2) + ((a.x - b.x) ** 2)
   end
 end

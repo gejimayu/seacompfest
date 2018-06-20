@@ -87,7 +87,7 @@ while true do
   when 1
     map.show
   when 2
-    Helper.orderGoRide()
+    puts map.find_closest_driver
   when 4
     Kernel.exit(false)
   else
