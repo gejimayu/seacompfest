@@ -2,6 +2,7 @@ require_relative "driver"
 require_relative "user"
 require_relative "map"
 require_relative "helper"
+require_relative "order"
 
 Unit_Cost = 100
 History_File_Name = "history.txt"
@@ -115,7 +116,8 @@ while true do
 
     case confirmation
     when "yes"
-      Helper.save_to_file(History_File_Name, drivers[closest_driver].name, route, cost)
+      order = Order.new(drivers[closest_driver].name, route, cost)
+      Helper.save_to_file(History_File_Name, order)
     when "no"
       #do nothing
     else

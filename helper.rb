@@ -135,8 +135,8 @@ module Helper
     path
   end
 
-  def Helper.save_to_file(filename, driver_name, route, cost)
-    route_len = route.split("\n").length
+  def Helper.save_to_file(filename, order)
+    route_len = order.route.split("\n").length
 
     output_stream = open(filename, "a")
 
@@ -144,18 +144,19 @@ module Helper
     output_stream.write("\n")
     output_stream.write("[Driver's name]")
     output_stream.write("\n")
-    output_stream.write(driver_name)
+    output_stream.write(order.driver_name)
     output_stream.write("\n")
     output_stream.write("[Route]")
     output_stream.write("\n")
     output_stream.write(route_len)
     output_stream.write("\n")
-    output_stream.write(route)
+    output_stream.write(order.route)
     output_stream.write("[Cost]")
     output_stream.write("\n")
-    output_stream.write(cost)
+    output_stream.write(order.cost)
     output_stream.write("\n")
 
     output_stream.close
   end
+
 end
