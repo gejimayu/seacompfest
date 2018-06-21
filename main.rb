@@ -4,6 +4,7 @@ require_relative "map"
 require_relative "helper"
 
 Unit_Cost = 100
+History_File_Name = "history.txt"
 
 flags = ARGV
 case flags.length
@@ -103,10 +104,24 @@ while true do
     puts "Found driver #{drivers[closest_driver].name}"
 
     path = Helper.find_path(user.pos, dest)
-    Helper.show_path(user.pos, dest, path)
+    route = Helper.show_path(user.pos, dest, path)
+    puts route
 
-    cost = Unit_Cost * (path.length - 1) #minus finish
+    cost = Unit_Cost * path.length
     puts "Cost : #{cost}"
+
+    print "Confirm order (yes/no) > "
+    confirmation = $stdin.gets.chomp
+
+    case confirmation
+    when "yes"
+      Helper.save_to_file(History_File_Name, drivers[closest_driver].name, route, cost)
+    when "no"
+      #do nothing
+    else
+      puts "Wrong input"
+    end
+
   when 4
     Kernel.exit(false)
   else

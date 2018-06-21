@@ -92,22 +92,22 @@ module Helper
   end
 
   def Helper.show_path(user_pos, dest, path)
-    puts "Route:"
-    puts "Start at (#{user_pos.x}, #{user_pos.y})"
+    route = "Route:\n"
+    route += "Start at (#{user_pos.x}, #{user_pos.y})\n"
     head = -1
     now = user_pos
     path.each do |way|
       closest = direction(now, way)
       if head != -1 && head != closest
-        puts turn_where(head, closest)
+        route += turn_where(head, closest) + "\n"
       end
 
       now = way
-      puts "Go to (#{now.x}, #{now.y})"
+      route += "Go to (#{now.x}, #{now.y})\n"
 
       head = closest
     end
-    puts "Finish at (#{dest.x}, #{dest.y})"
+    route += "Finish at (#{dest.x}, #{dest.y})\n"
   end
 
   def Helper.find_path(user_pos, dest)
@@ -133,5 +133,29 @@ module Helper
       path << now
     end
     path
+  end
+
+  def Helper.save_to_file(filename, driver_name, route, cost)
+    route_len = route.split("\n").length
+
+    output_stream = open(filename, "a")
+
+    output_stream.write(">> Order")
+    output_stream.write("\n")
+    output_stream.write("[Driver's name]")
+    output_stream.write("\n")
+    output_stream.write(driver_name)
+    output_stream.write("\n")
+    output_stream.write("[Route]")
+    output_stream.write("\n")
+    output_stream.write(route_len)
+    output_stream.write("\n")
+    output_stream.write(route)
+    output_stream.write("[Cost]")
+    output_stream.write("\n")
+    output_stream.write(cost)
+    output_stream.write("\n")
+
+    output_stream.close
   end
 end
