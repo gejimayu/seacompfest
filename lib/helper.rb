@@ -1,10 +1,13 @@
 module Helper
+
+  #Generate random position based on map size
   def Helper.generate_random_pos(map)
     posX = Random.rand(0...map.size)
     posY = Random.rand(0...map.size)
     Struct.new(:x, :y).new(posX, posY)
   end
 
+  #Generate five drivers object with random position
   def Helper.generate_five_drivers_randomly(map)
     drivers = []
     for i in 0...5
@@ -16,6 +19,7 @@ module Helper
     drivers
   end
 
+  #Generate drivers object based on positions provided by array drivers_pos
   def Helper.generate_drivers(map, drivers_pos)
     drivers = []
     for i in 0...drivers_pos.length
@@ -27,14 +31,19 @@ module Helper
     drivers
   end
 
+  #True if x or y is out of bound
   def Helper.is_out_of_bound(x, y, bound)
     return y < 0 || y >= bound || x < 0 || x >= bound
   end
 
+  #Calculate distance between two point
   def Helper.calculate_distance(a, b)
     ((a.y - b.y) ** 2) + ((a.x - b.x) ** 2)
   end
 
+  #Find closest drivers to user
+  #drivers : array of object driver
+  #user : object user
   def Helper.find_closest_driver(user, drivers)
     raise "Error user / driver not found" if user.nil? || drivers.empty?
 
@@ -51,6 +60,8 @@ module Helper
     closest
   end
 
+  #Return turning direction base on previos direction and next direction
+  #0 : top, 1: right, 2 : bottom, 3: left
   def Helper.turn_where(prev_head, next_head)
     if prev_head == 0 && next_head == 1
       "Turn right"
@@ -79,6 +90,8 @@ module Helper
     end
   end
 
+  #Generate direction if we move (top, bottom, left, right) from point a to point b
+  #0 : top, 1: right, 2 : bottom, 3: left
   def Helper.direction(from, to)
     if to.x - from.x > 0
       1 #right
@@ -91,6 +104,10 @@ module Helper
     end
   end
 
+  #Display route in a pretty way
+  #user_pos: user's position
+  #dest: destination point
+  #path: array of path
   def Helper.show_path(user_pos, dest, path)
     route = "Route:\n"
     route += "Start at (#{user_pos.x}, #{user_pos.y})\n"
@@ -110,6 +127,7 @@ module Helper
     route += "Finish at (#{dest.x}, #{dest.y})\n"
   end
 
+  #Generate array of point which is the shortest path from user_pos to dest
   def Helper.find_path(user_pos, dest)
     path = []
     now = user_pos
@@ -135,6 +153,7 @@ module Helper
     path
   end
 
+  #Save order history to file
   def Helper.save_to_file(filename, order)
     route_len = order.route.split("\n").length
 
@@ -159,6 +178,7 @@ module Helper
     output_stream.close
   end
 
+  #Read order history from file
   def Helper.read_history(filename)
     begin
       input_stream = open(filename)

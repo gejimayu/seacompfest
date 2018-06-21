@@ -42,20 +42,4 @@ class Map
       puts "Error inserting object to map : expecting driver or user"  
     end
   end
-
-  def find_closest_driver
-    raise "Error user / driver not found" if @user.nil? || @drivers.empty?
-
-    min = Helper.calculate_distance(@drivers[0].pos, @user.pos)
-    closest = 0 #driver num 0
-    for i in 1...@drivers.length
-      result = Helper.calculate_distance(@drivers[i].pos, @user.pos) 
-      if result < min
-        min = result 
-        closest = i
-      end
-    end
-
-    closest
-  end
 end

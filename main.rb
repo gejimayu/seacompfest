@@ -19,7 +19,6 @@ when 0
   pos = Helper.generate_random_pos(map)
   user = User.new(pos.x, pos.y)
   map.insert(user)
-  map.find_closest_driver
 
 when 3
   size = flags[0].to_i
@@ -93,6 +92,8 @@ while true do
     temp = $stdin.gets.chomp.split(" ").map { |x| x.to_i }
     dest = Struct.new(:x, :y).new(temp[0], temp[1])
     print "\n"
+
+    raise "Error: destination is out of bound" if Helper.is_out_of_bound(dest.x, dest.y, map.size)
 
     closest_driver = Helper.find_closest_driver(user, drivers)
     puts "Found driver #{drivers[closest_driver].name}"
