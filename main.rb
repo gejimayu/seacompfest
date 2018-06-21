@@ -1,8 +1,8 @@
-require_relative "driver"
-require_relative "user"
-require_relative "map"
-require_relative "helper"
-require_relative "order"
+require_relative "lib/driver"
+require_relative "lib/user"
+require_relative "lib/map"
+require_relative "lib/helper"
+require_relative "lib/order"
 
 # Constant
 Unit_Cost = 100
