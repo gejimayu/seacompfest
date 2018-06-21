@@ -1,3 +1,5 @@
+require_relative "helper"
+
 class Map
   attr_reader :size #size of map, n x n
 
@@ -25,9 +27,15 @@ class Map
   #insert object into map
   def insert(object)
     if object.is_a?(Driver)
+      if Helper.is_out_of_bound(object.pos.x, object.pos.y, size) 
+        raise "Wrong input : driver's position is out of boundary"
+      end
       @grid[object.pos.y][object.pos.x] = object.name
       @drivers << object
     elsif object.is_a?(User)
+      if Helper.is_out_of_bound(object.pos.x, object.pos.y, size) 
+        raise "Wrong input : user's position is out of boundary"
+      end
       @grid[object.pos.y][object.pos.x] = "U"
       @user = object
     else

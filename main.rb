@@ -26,10 +26,6 @@ when 3
   user_pos_x = flags[1].to_i
   user_pos_y = flags[2].to_i
 
-  if Helper.is_out_of_bound(user_pos_x, user_pos_y, size)
-    raise "Wrong input : user's position is out of boundary"
-  end
-
   map = Map.new(size)
 
   drivers = Helper.generate_five_drivers_randomly(map)
@@ -63,10 +59,6 @@ when 1
     end
   end
   input_stream.close
-
-  if Helper.is_out_of_bound(user_pos_x, user_pos_y, size)
-    raise "Wrong input : user's position is out of boundary"
-  end
 
   map = Map.new(size)
 
