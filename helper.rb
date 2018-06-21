@@ -159,4 +159,35 @@ module Helper
     output_stream.close
   end
 
+  def Helper.read_history(filename)
+    begin
+      input_stream = open(filename)
+      orders = []
+
+      line = input_stream.gets
+      while (line == ">> Order\n")
+        route = ""
+        while ((line = input_stream.gets) && (line != ">> Order\n"))
+          case line
+          when "[Driver's name]\n"
+            driver_name = input_stream.gets.chomp
+          when "[Route]\n"
+            n = input_stream.gets.chomp.to_i
+            for i in 1..n
+              route += input_stream.gets
+            end
+          when "[Cost]\n"
+            cost = input_stream.gets.chomp
+          end
+        end
+        orders << Order.new(driver_name, route, cost)
+      end
+      input_stream.close
+
+      orders
+    rescue Exception => e
+      return e
+    end
+  end
+
 end

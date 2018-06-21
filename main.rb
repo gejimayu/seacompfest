@@ -4,6 +4,7 @@ require_relative "map"
 require_relative "helper"
 require_relative "order"
 
+# Constant
 Unit_Cost = 100
 History_File_Name = "history.txt"
 
@@ -123,7 +124,23 @@ while true do
     else
       puts "Wrong input"
     end
-
+  when 3
+    orders = Helper.read_history(History_File_Name)
+    if orders.is_a?(Exception)
+      puts orders.message
+    elsif orders.length == 0
+      puts "You have no order history"
+    else
+      i = 0
+      orders.each do |order|
+        i += 1
+        puts "Order no-#{i}"
+        puts "Driver name : #{order.driver_name}"
+        puts "#{order.route}"
+        puts "Cost : #{order.cost}"
+        puts "\n"
+      end
+    end
   when 4
     Kernel.exit(false)
   else
